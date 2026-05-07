@@ -1,0 +1,206 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #0f0f14;
+  color: #e0e0e8;
+  font-family: system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+}
+
+/* ConnectScreen */
+.connect-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 32px 24px;
+}
+
+.connect-screen h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+.connect-screen p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: -28px;
+}
+
+.connect-screen form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.connect-screen input {
+  background: #1a1a28;
+  border: 1px solid #2a2a3a;
+  border-radius: 14px;
+  color: #e0e0e8;
+  font-size: 1rem;
+  padding: 16px 18px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.connect-screen input:focus {
+  border-color: #4f8ef7;
+}
+
+.connect-screen input::placeholder {
+  color: #44445a;
+}
+
+.connect-screen button[type='submit'] {
+  background: #4f8ef7;
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px;
+  margin-top: 4px;
+  transition: opacity 0.15s;
+}
+
+.connect-screen button[type='submit']:active {
+  opacity: 0.85;
+}
+
+/* RemoteScreen */
+.remote {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-bar {
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: #0f0f14;
+  border-bottom: 1px solid #1e1e2e;
+}
+
+.status-bar span {
+  font-size: 0.75rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf50;
+  flex-shrink: 0;
+}
+
+.status-bar button {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+}
+
+/* Trackpad */
+.trackpad {
+  flex: 1;
+  background: #1a1a28;
+  touch-action: none;
+  position: relative;
+  cursor: crosshair;
+}
+
+.trackpad-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.68rem;
+  color: #2a2a40;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+/* Click Buttons */
+.click-buttons {
+  display: flex;
+  height: 100px;
+  flex-shrink: 0;
+  border-top: 1px solid #1e1e2e;
+}
+
+.click-buttons button {
+  flex: 1;
+  background: #0f0f14;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transition: background 0.1s, color 0.1s;
+}
+
+.click-buttons button:first-child {
+  border-right: 1px solid #1e1e2e;
+}
+
+.click-buttons button:active {
+  background: #1a1a28;
+  color: #ccc;
+}
+
+/* Connecting state */
+.connecting {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.connecting button {
+  background: none;
+  border: 1px solid #2a2a3a;
+  border-radius: 10px;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  margin-top: 8px;
+}
