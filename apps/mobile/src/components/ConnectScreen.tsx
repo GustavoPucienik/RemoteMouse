@@ -1,16 +1,24 @@
 import { useState } from 'react'
 
+const STORAGE_IP_KEY = 'remotemouse_ip'
+const STORAGE_PORT_KEY = 'remotemouse_port'
+
 interface Props {
   onConnect: (ip: string, port: string) => void
 }
 
 export default function ConnectScreen({ onConnect }: Props) {
-  const [ip, setIp] = useState('')
-  const [port, setPort] = useState('8080')
+  const [ip, setIp] = useState(() => localStorage.getItem(STORAGE_IP_KEY) ?? '')
+  const [port, setPort] = useState(() => localStorage.getItem(STORAGE_PORT_KEY) ?? '8080')
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (ip.trim()) onConnect(ip.trim(), port.trim())
+    const trimmedIp = ip.trim()
+    const trimmedPort = port.trim()
+    if (!trimmedIp) return
+    localStorage.setItem(STORAGE_IP_KEY, trimmedIp)
+    localStorage.setItem(STORAGE_PORT_KEY, trimmedPort)
+    onConnect(trimmedIp, trimmedPort)
   }
 
   return (
