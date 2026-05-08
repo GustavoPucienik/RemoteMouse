@@ -1,121 +1,99 @@
 # RemoteMouse
 
-Um software open-source que permite controlar o computador pelo celular de forma simples, rápida e sem depender de serviços externos.
+Controle o computador pelo celular via rede local. Sem conta, sem internet, sem anúncios.
 
 ---
 
-# O problema
+## O problema
 
-Muitas vezes estamos usando o computador e precisamos levantar apenas para fazer pequenas ações como:
+Muitas vezes precisamos fazer pequenas ações no computador — pular um anúncio, pausar uma música, controlar uma apresentação — sem querer levantar ou sem ter o teclado/mouse por perto.
 
-- pular um anúncio
-- trocar para o próximo vídeo
-- pausar uma música
-- aumentar ou diminuir o volume
-- clicar em algum botão rápido
-- controlar apresentações
-- mexer no mouse à distância
-
-Isso acontece bastante quando:
-- estamos longe do computador
-- o PC está conectado em outra tela
-- estamos trabalhando e não queremos interromper o que estamos fazendo
-- o teclado/mouse está distante
-- queremos apenas um controle rápido pelo celular
-
-As soluções existentes normalmente possuem problemas como:
-- excesso de anúncios
-- limitações na versão gratuita
-- dependência de internet/cloud
-- software pesado
-- aplicativos antigos e mal otimizados
-- falta de privacidade
-- soluções fechadas e não transparentes
+As soluções existentes costumam ter anúncios, limitações na versão gratuita, dependência de servidores externos ou aplicativos pesados e desatualizados.
 
 ---
 
-# A solução
+## A solução
 
-O RemoteMouse nasce para ser uma alternativa:
-- leve
-- moderna
-- open-source
-- rápida
-- simples de usar
-- focada em privacidade
-
-A proposta é transformar qualquer celular em um controle remoto para o computador utilizando apenas a rede local.
-
-Sem precisar criar conta.  
-Sem depender de servidores externos.  
-Sem assinatura.
+O RemoteMouse transforma qualquer celular em um controle remoto para o computador usando apenas a rede Wi-Fi local. Open-source, leve e focado em privacidade.
 
 ---
 
-# Objetivos do projeto
+## Funcionalidades
 
-- Controlar o mouse pelo celular
-- Realizar cliques esquerdo/direito
-- Scroll da tela
-- Controle de mídia
-- Próximo vídeo/anterior
-- Controle de volume
-- Teclado remoto
-- Baixa latência
-- Interface simples e moderna
-
----
-
-# Tecnologias
-
-## Desktop
-- Go
-- WebSocket
-- RobotGo
-
-## Mobile/Web
-- React
-- TypeScript
+| Funcionalidade   | Status |
+|------------------|--------|
+| Mover o mouse    | ✅ |
+| Clique esquerdo/direito | ✅ |
+| Scroll           | ✅ |
+| Teclado remoto   | ✅ |
+| Controle de mídia | 🔜 |
+| Controle de volume | 🔜 |
 
 ---
 
-# Futuras funcionalidades
+## Como usar
 
-- Conexão por QRCode
-- Suporte multi-monitor
-- Gestos
+**1. No computador** — inicie o servidor:
+
+```bash
+cd apps/desktop
+go run .\cmd\main.go
+```
+
+O terminal exibirá o IP da máquina na rede local.
+
+**2. No celular** — inicie o app web:
+
+```bash
+cd apps/mobile
+npm install
+npm run dev -- --host
+```
+
+Abra o endereço exibido no terminal no navegador do celular, digite o IP do computador e conecte.
+
+---
+
+## Tecnologias
+
+| Camada | Tecnologia |
+|---|---|
+| Servidor (desktop) | Go + WebSocket + Win32 API (`user32.dll`) |
+| Cliente (mobile/web) | React + TypeScript + Vite |
+
+---
+
+## Estrutura do projeto
+
+```
+RemoteMouse/
+├── apps/
+│   ├── desktop/    # Servidor Go para Windows
+│   └── mobile/     # Cliente web (React)
+└── shared/
+    └── protocol/   # Especificação do protocolo WebSocket
+```
+
+---
+
+## Futuras funcionalidades
+
+- Conexão por QR Code
+- Controle de mídia e volume
 - Atalhos personalizados
-- Modo touchpad
-- Compartilhamento de arquivos
-- Wake-on-LAN
 - Comunicação criptografada
-- PWA
+- PWA (instalar como app no celular)
+- Suporte multi-monitor
+- Wake-on-LAN
 
 ---
 
-# Filosofia
+## Filosofia
 
-O projeto busca ser:
-- minimalista
-- rápido
-- privado
-- transparente
-- fácil de usar
-- fácil de contribuir
+Minimalista, rápido, privado e fácil de contribuir. Nenhum dado sai da sua rede local.
 
 ---
 
-# Open Source
+## Status
 
-Todo o código será aberto para que qualquer pessoa possa:
-- contribuir
-- estudar
-- modificar
-- hospedar
-- melhorar o projeto
-
----
-
-# Status
-
-🚧 Em desenvolvimento.
+🚧 Em desenvolvimento — MVP funcional.

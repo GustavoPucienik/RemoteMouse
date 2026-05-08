@@ -1,14 +1,19 @@
+import { useState } from 'react'
 import { useWebSocket } from '../hooks/useWebSocket'
 import Trackpad from './Trackpad'
 import ClickButtons from './ClickButtons'
+import Keyboard from './Keyboard'
 
 interface Props {
   wsUrl: string
   onDisconnect: () => void
 }
 
+type Mode = 'mouse' | 'keyboard'
+
 export default function RemoteScreen({ wsUrl, onDisconnect }: Props) {
   const { connected, send } = useWebSocket(wsUrl)
+  const [mode, setMode] = useState<Mode>('mouse')
 
   if (!connected) {
     return (
@@ -26,10 +31,25 @@ export default function RemoteScreen({ wsUrl, onDisconnect }: Props) {
           <span className="status-dot" />
           Conectado
         </span>
-        <button onClick={onDisconnect}>Desconectar</button>
+        <div className="status-actions">
+          <button
+            className={`mode-btn${mode === 'keyboard' ? ' active' : ''}`}
+            onClick={() => setMode(m => m === 'mouse' ? 'keyboard' : 'mouse')}
+          >
+            ⌨
+          </button>
+          <button onClick={onDisconnect}>Desconectar</button>
+        </div>
       </div>
-      <Trackpad send={send} />
-      <ClickButtons send={send} />
+
+      {mode === 'mouse' ? (
+        <>
+          <Trackpad send={send} />
+          <ClickButtons send={send} />
+        </>
+      ) : (
+        <Keyboard send={send} />
+      )}
     </div>
   )
 }

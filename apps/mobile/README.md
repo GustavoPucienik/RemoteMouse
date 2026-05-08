@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# RemoteMouse — Mobile
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cliente web em React/TypeScript que funciona como controle remoto no navegador do celular.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Pré-requisitos
 
-## React Compiler
+- [Node.js 18+](https://nodejs.org/)
+- Celular e computador na mesma rede Wi-Fi
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Iniciando
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev -- --host
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+O flag `--host` expõe o servidor na rede local. Abra o endereço exibido no terminal no navegador do celular.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Outros scripts
+
+| Comando         | Descrição                        |
+|-----------------|----------------------------------|
+| `npm run dev`   | Servidor de desenvolvimento      |
+| `npm run build` | Build de produção (pasta `dist/`) |
+| `npm run lint`  | Verificação de código com ESLint |
+
+---
+
+## Estrutura
+
 ```
+mobile/
+├── src/
+│   ├── components/
+│   │   ├── ConnectScreen.tsx  # Tela de conexão (IP + porta)
+│   │   ├── RemoteScreen.tsx   # Tela principal (alterna mouse/teclado)
+│   │   ├── Trackpad.tsx       # Área de toque para mover o mouse
+│   │   ├── ClickButtons.tsx   # Botões de clique esquerdo/direito
+│   │   └── Keyboard.tsx       # Teclado remoto com teclas especiais
+│   ├── hooks/
+│   │   └── useWebSocket.ts    # Gerencia a conexão WebSocket
+│   ├── App.tsx                # Raiz: ConnectScreen → RemoteScreen
+│   ├── main.tsx               # Entry point
+│   └── index.css              # Estilos globais (dark theme)
+└── index.html
+```
+
+---
+
+## Gestos no trackpad
+
+| Gesto         | Ação           |
+|---------------|----------------|
+| 1 dedo        | Mover o mouse  |
+| 2 dedos       | Scroll         |
+
+---
+
+## Modo teclado
+
+Toque no ícone `⌨` na barra superior para alternar para o teclado remoto. O teclado nativo do celular aparece automaticamente para digitar texto. Teclas especiais (Esc, Tab, setas, Del) ficam disponíveis como botões na tela.

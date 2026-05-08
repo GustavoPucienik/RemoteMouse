@@ -130,6 +130,23 @@ html, body {
   padding: 4px 8px;
 }
 
+.status-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-btn {
+  border-radius: 6px;
+  font-size: 1rem !important;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mode-btn.active {
+  background: #1a1a28 !important;
+  color: #4f8ef7 !important;
+}
+
 /* Trackpad */
 .trackpad {
   flex: 1;
@@ -180,6 +197,66 @@ html, body {
 .click-buttons button:active {
   background: #1a1a28;
   color: #ccc;
+}
+
+/* Keyboard Panel */
+.keyboard-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 12px;
+  background: #0f0f14;
+  overflow-y: auto;
+}
+
+.keyboard-special-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.key-btn {
+  flex: 1;
+  min-width: 44px;
+  height: 48px;
+  background: #1a1a28;
+  border: 1px solid #2a2a3a;
+  border-radius: 10px;
+  color: #c0c0d0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  touch-action: manipulation;
+  transition: background 0.1s, color 0.1s;
+}
+
+.key-btn:active {
+  background: #2a2a3e;
+  color: #fff;
+}
+
+.keyboard-input {
+  width: 100%;
+  background: #1a1a28;
+  border: 1px solid #2a2a3a;
+  border-radius: 12px;
+  color: #e0e0e8;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 14px 16px;
+  outline: none;
+  resize: none;
+  caret-color: #4f8ef7;
+  transition: border-color 0.2s;
+}
+
+.keyboard-input:focus {
+  border-color: #4f8ef7;
+}
+
+.keyboard-input::placeholder {
+  color: #2a2a40;
 }
 
 /* Connecting state */

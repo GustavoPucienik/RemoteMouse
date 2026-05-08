@@ -34,6 +34,40 @@ Realiza um clique simples ou duplo.
 
 ---
 
+## key_press
+
+Pressiona e solta uma tecla no desktop.
+
+```json
+{ "type": "key_press", "key": "a" }
+{ "type": "key_press", "key": "Enter" }
+```
+
+| Campo | Tipo   | Descrição |
+|-------|--------|-----------|
+| `key` | string | Caractere único (ex: `"a"`, `"@"`) ou nome de tecla especial (Web `KeyboardEvent.key`) |
+
+**Teclas especiais suportadas:**
+
+| `key`        | Ação           |
+|--------------|----------------|
+| `Backspace`  | Apagar         |
+| `Tab`        | Tabulação      |
+| `Enter`      | Confirmar      |
+| `Escape`     | Cancelar       |
+| `Delete`     | Delete         |
+| `Home`       | Início da linha |
+| `End`        | Fim da linha   |
+| `PageUp`     | Página acima   |
+| `PageDown`   | Página abaixo  |
+| `ArrowLeft`  | Seta esquerda  |
+| `ArrowRight` | Seta direita   |
+| `ArrowUp`    | Seta acima     |
+| `ArrowDown`  | Seta abaixo    |
+| `F1`–`F12`   | Teclas de função |
+
+---
+
 ## scroll
 
 Rola a tela verticalmente.

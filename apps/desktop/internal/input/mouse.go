@@ -71,6 +71,11 @@ type scrollCmd struct {
 	DY int32 `json:"dy"` // positive = scroll up, negative = scroll down
 }
 
+// keyPressCmd representa o pressionamento de uma tecla.
+type keyPressCmd struct {
+	Key string `json:"key"` // Web KeyboardEvent.key value or single character
+}
+
 // Handle decodifica uma mensagem JSON recebida pelo WebSocket e executa o
 // comando de input correspondente. Usa double-unmarshal: primeiro lê só o
 // campo "type" para evitar alocar todos os structs de uma vez, depois faz
@@ -93,6 +98,10 @@ func Handle(data []byte) error {
 		var cmd scrollCmd
 		json.Unmarshal(data, &cmd)
 		return sendScroll(cmd.DY)
+	case "key_press":
+		var cmd keyPressCmd
+		json.Unmarshal(data, &cmd)
+		return sendKeyPress(cmd.Key)
 	default:
 		return fmt.Errorf("unknown command type: %s", base.Type)
 	}
