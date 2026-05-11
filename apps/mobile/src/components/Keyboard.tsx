@@ -16,6 +16,17 @@ const SPECIAL_KEYS = [
 
 export default function Keyboard({ send }: Props) {
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  // composingRef: true while Android IME (GBoard) is in the middle of composition.
+  // Clearing target.value during composition causes GBoard to fire a ghost
+  // deleteContentBackward that cancels every character typed — so we must
+  // wait for compositionEnd before touching the textarea.
+  const composingRef = useRef(false)
+  // After compositionEnd we send the committed text ourselves.  The browser
+  // then fires a redundant insertText with the same chars (plus any suffix
+  // like a trailing space added by the commit key).  pendingCompositionRef
+  // holds what we already sent so onInput can skip the duplicate and only
+  // forward the extra suffix.
+  const pendingCompositionRef = useRef<string | null>(null)
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -26,9 +37,40 @@ export default function Keyboard({ send }: Props) {
     [send],
   )
 
+  function onCompositionStart() {
+    composingRef.current = true
+    pendingCompositionRef.current = null
+  }
+
+  function onCompositionEnd(e: React.CompositionEvent<HTMLTextAreaElement>) {
+    composingRef.current = false
+    const text = e.data ?? ''
+    pendingCompositionRef.current = text
+    for (const char of text) sendKey(char)
+    e.currentTarget.value = ''
+  }
+
   function onInput(e: React.FormEvent<HTMLTextAreaElement>) {
     const ev = e.nativeEvent as InputEvent
     const target = e.target as HTMLTextAreaElement
+
+    // During composition do nothing — compositionEnd will handle it.
+    if (composingRef.current || ev.inputType === 'insertCompositionText') return
+
+    const pending = pendingCompositionRef.current
+    pendingCompositionRef.current = null
+
+    if (pending !== null && ev.inputType === 'insertText') {
+      // This is the insertText that fires right after compositionEnd.
+      // We already sent `pending`; only send any suffix (e.g. the space
+      // that the user pressed to commit the composition word).
+      const suffix = (ev.data ?? '').startsWith(pending)
+        ? (ev.data ?? '').slice(pending.length)
+        : ''
+      for (const char of suffix) sendKey(char)
+      target.value = ''
+      return
+    }
 
     if (ev.inputType === 'deleteContentBackward') {
       sendKey('Backspace')
@@ -38,7 +80,6 @@ export default function Keyboard({ send }: Props) {
       for (const char of ev.data) sendKey(char)
     }
 
-    // Keep textarea empty so future inputs are always detected
     target.value = ''
   }
 
@@ -77,6 +118,8 @@ export default function Keyboard({ send }: Props) {
         className="keyboard-input"
         onInput={onInput}
         onKeyDown={onKeyDown}
+        onCompositionStart={onCompositionStart}
+        onCompositionEnd={onCompositionEnd}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"

@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	inputKeyboard   = 2
+	inputKeyboard   = 1
 	keyEventKeyUp   = 0x0002
 	keyEventUnicode = 0x0004
 	keyEventExtended = 0x0001 // arrows, Delete, Home, End, PgUp, PgDn
